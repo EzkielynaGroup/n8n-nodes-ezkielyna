@@ -1,5 +1,9 @@
 # n8n-nodes-ezkielyna
 
+<!-- ezk:badges -->
+[![npm](https://img.shields.io/npm/v/n8n-nodes-ezkielyna?color=c2410c)](https://www.npmjs.com/package/n8n-nodes-ezkielyna) [![CI](https://github.com/EzkielynaGroup/n8n-nodes-ezkielyna/actions/workflows/ci.yml/badge.svg)](https://github.com/EzkielynaGroup/n8n-nodes-ezkielyna/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+<!-- /ezk:badges -->
+
 n8n community nodes for the [Ezkielyna AI API](https://ezkielyna.store/?utm_source=github&utm_medium=readme&utm_campaign=n8n-nodes-ezkielyna): chat with DeepSeek, GLM, Qwen, Kimi, Claude, GPT and other models, search the web, turn text into Indonesian speech, transcribe recordings and generate images, plus a chat model for the n8n **AI Agent**. One credential, one API key, pay from $0.5 with QRIS.
 
 > Bahasa Indonesia: lihat [bagian di bawah](#bahasa-indonesia).
@@ -230,3 +234,17 @@ n8n menyimpannya terenkripsi sebagai credential. Node hanya mengirim key ke Base
 ### Lisensi
 
 [MIT](LICENSE) © 2026 Ezekiel Lieberhart (Ezkielyna).
+
+<!-- ezk:toolkit -->
+---
+
+### Part of the Ezkielyna developer toolkit
+
+Open-source tools from [Ezkielyna](https://ezkielyna.store/?utm_source=github&utm_medium=readme&utm_campaign=n8n-nodes-ezkielyna), an independent OpenAI- and Anthropic-compatible AI API gateway (pay with QRIS, USDT or Binance Pay; no credit card).
+
+| No API key needed | With an Ezkielyna key |
+|---|---|
+| [mcp-bmkg](https://github.com/EzkielynaGroup/mcp-bmkg) · [mcp-wilayah-indonesia](https://github.com/EzkielynaGroup/mcp-wilayah-indonesia) · [mcp-hari-libur-indonesia](https://github.com/EzkielynaGroup/mcp-hari-libur-indonesia) · [mcp-rupiah](https://github.com/EzkielynaGroup/mcp-rupiah) · [mcp-qris](https://github.com/EzkielynaGroup/mcp-qris) · [ai-model-status-mcp](https://github.com/EzkielynaGroup/ai-model-status-mcp) | [ezkielyna-mcp](https://github.com/EzkielynaGroup/ezkielyna-mcp) · [ezkielyna-image-mcp](https://github.com/EzkielynaGroup/ezkielyna-image-mcp) · [ezkielyna-audio-mcp](https://github.com/EzkielynaGroup/ezkielyna-audio-mcp) · [n8n-nodes-ezkielyna](https://github.com/EzkielynaGroup/n8n-nodes-ezkielyna) |
+
+More: [all repositories](https://github.com/EzkielynaGroup) · [awesome-mcp-indonesia](https://github.com/EzkielynaGroup/awesome-mcp-indonesia) · [awesome-ai-indonesia](https://github.com/EzkielynaGroup/awesome-ai-indonesia)
+<!-- /ezk:toolkit -->
