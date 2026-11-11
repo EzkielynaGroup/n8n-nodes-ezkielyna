@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-ezkielyna",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"description": "n8n nodes for the Ezkielyna AI API gateway: chat, web search, text to speech, transcription, image generation and an AI Agent chat model.",
 	"license": "MIT",
 	"homepage": "https://github.com/EzkielynaGroup/n8n-nodes-ezkielyna#readme",
