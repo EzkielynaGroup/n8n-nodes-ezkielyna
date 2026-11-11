@@ -1,0 +1,151 @@
+{
+  "name": "Ezkielyna: berita hari ini jadi suara",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Berita hari ini jadi suara\n\n1. Buat credential **Ezkielyna API** (API key `sk-...` dari api.ezkielyna.store → API Keys, key grup Standard atau Auto).\n2. Pilih credential itu di tiga node Ezkielyna.\n3. Ganti kata kunci di node **Cari berita**, lalu klik **Execute workflow**.\n\nHasil: ringkasan 3 kalimat (field `text`) dan file MP3 suara Bahasa Indonesia (field biner `data`).\n\nBiaya: 1 pencarian + 1 chat ±400 token + 1 TTS edge-tts per jalan.",
+        "height": 360,
+        "width": 420
+      },
+      "id": "6f1d1a52-0d0e-4c43-9f1e-0a9b8a1b0001",
+      "name": "Catatan",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -520,
+        -160
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "6f1d1a52-0d0e-4c43-9f1e-0a9b8a1b0002",
+      "name": "Mulai",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "webSearch",
+        "operation": "search",
+        "query": "berita UMKM Indonesia hari ini",
+        "maxResults": 5,
+        "splitResults": false,
+        "options": {
+          "language": "id",
+          "timeRange": "day"
+        }
+      },
+      "id": "6f1d1a52-0d0e-4c43-9f1e-0a9b8a1b0003",
+      "name": "Cari berita",
+      "type": "n8n-nodes-ezkielyna.ezkielyna",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "credentials": {
+        "ezkielynaApi": {
+          "name": "Ezkielyna account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "text",
+        "operation": "message",
+        "model": "deepseek-v4.1-flash",
+        "prompt": "=Ringkas hasil pencarian berikut menjadi 3 kalimat pendek untuk dibacakan sebagai berita audio. Sebut sumbernya secara singkat.\n\n{{ $json.results.map(r => '- ' + r.title + ': ' + r.snippet).join('\\n') }}",
+        "simplify": true,
+        "options": {
+          "systemMessage": "Kamu penyiar berita yang ringkas dan netral. Jawab dalam Bahasa Indonesia tanpa format markdown.",
+          "maxTokens": 400,
+          "temperature": 0.3
+        }
+      },
+      "id": "6f1d1a52-0d0e-4c43-9f1e-0a9b8a1b0004",
+      "name": "Ringkas",
+      "type": "n8n-nodes-ezkielyna.ezkielyna",
+      "typeVersion": 1,
+      "position": [
+        440,
+        0
+      ],
+      "credentials": {
+        "ezkielynaApi": {
+          "name": "Ezkielyna account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "textToSpeech",
+        "model": "edge-tts",
+        "text": "={{ $json.text }}",
+        "voice": "id-ID-GadisNeural",
+        "binaryPropertyName": "data",
+        "options": {
+          "fileName": "berita-hari-ini"
+        }
+      },
+      "id": "6f1d1a52-0d0e-4c43-9f1e-0a9b8a1b0005",
+      "name": "Jadikan suara",
+      "type": "n8n-nodes-ezkielyna.ezkielyna",
+      "typeVersion": 1,
+      "position": [
+        660,
+        0
+      ],
+      "credentials": {
+        "ezkielynaApi": {
+          "name": "Ezkielyna account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Mulai": {
+      "main": [
+        [
+          {
+            "node": "Cari berita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cari berita": {
+      "main": [
+        [
+          {
+            "node": "Ringkas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ringkas": {
+      "main": [
+        [
+          {
+            "node": "Jadikan suara",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

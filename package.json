@@ -1,0 +1,72 @@
+{
+	"name": "n8n-nodes-ezkielyna",
+	"version": "0.1.0",
+	"description": "n8n nodes for the Ezkielyna AI API gateway: chat, web search, text to speech, transcription, image generation and an AI Agent chat model.",
+	"license": "MIT",
+	"homepage": "https://github.com/EzkielynaGroup/n8n-nodes-ezkielyna#readme",
+	"keywords": [
+		"n8n-community-node-package",
+		"n8n",
+		"ezkielyna",
+		"ai",
+		"llm",
+		"openai-compatible",
+		"deepseek",
+		"text-to-speech",
+		"speech-to-text",
+		"web-search",
+		"image-generation",
+		"indonesia"
+	],
+	"author": {
+		"name": "Ezekiel Lieberhart (Ezkielyna)",
+		"email": "353465234+Ezekiel-Lieberthart@users.noreply.github.com",
+		"url": "https://ezkielyna.store"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/EzkielynaGroup/n8n-nodes-ezkielyna.git"
+	},
+	"bugs": {
+		"url": "https://github.com/EzkielynaGroup/n8n-nodes-ezkielyna/issues"
+	},
+	"scripts": {
+		"build": "n8n-node build",
+		"build:watch": "tsc --watch",
+		"dev": "n8n-node dev",
+		"lint": "n8n-node lint",
+		"lint:fix": "n8n-node lint --fix",
+		"test": "n8n-node build && node --test test/",
+		"release": "n8n-node release",
+		"prepublishOnly": "n8n-node prerelease"
+	},
+	"files": [
+		"dist",
+		"!dist/tsconfig.tsbuildinfo"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"aiNodeSdkVersion": 1,
+		"strict": true,
+		"credentials": [
+			"dist/credentials/EzkielynaApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/Ezkielyna/Ezkielyna.node.js",
+			"dist/nodes/LmChatEzkielyna/LmChatEzkielyna.node.js"
+		]
+	},
+	"devDependencies": {
+		"@n8n/ai-node-sdk": "0.37.2",
+		"@n8n/node-cli": "^0.56.2",
+		"eslint": "9.32.0",
+		"n8n-workflow": "*",
+		"prettier": "3.6.2",
+		"release-it": "^21.1.0",
+		"typescript": "5.9.2"
+	},
+	"peerDependencies": {
+		"@n8n/ai-node-sdk": "*",
+		"n8n-workflow": "*"
+	}
+}

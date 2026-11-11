@@ -1,0 +1,163 @@
+{
+  "name": "Ezkielyna: agen AI dengan pencarian web",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Agen AI dengan Ezkielyna\n\n- **Ezkielyna Chat Model** menjadi otak agen (default `deepseek-v4.1-flash`).\n- **Cari di web** adalah node Ezkielyna yang dipakai sebagai tool: agen memanggilnya sendiri kalau butuh info terbaru.\n- **Simple Memory** mengingat 6 pesan terakhir per sesi chat.\n\nSetup: buat credential **Ezkielyna API** (key grup Standard atau Auto), pilih di node chat model dan node tool, lalu klik **Open chat** dan tanya misalnya: *Berapa kurs dolar ke rupiah hari ini?*\n\nButuh n8n rilis 2026 (yang sudah punya AI node SDK).",
+        "height": 400,
+        "width": 440
+      },
+      "id": "7a2e2b63-1e1f-4d54-8a2f-1b0c9b2c0001",
+      "name": "Catatan",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "7a2e2b63-1e1f-4d54-8a2f-1b0c9b2c0002",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "5d1c0d4e-7a1b-4c1e-9b8a-a1b2c3d4e5f6"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Kamu asisten yang membantu pelaku UMKM di Indonesia. Jawab singkat dalam Bahasa Indonesia. Pakai tool pencarian web untuk pertanyaan tentang harga, berita, atau hal terbaru, lalu sebut sumbernya."
+        }
+      },
+      "id": "7a2e2b63-1e1f-4d54-8a2f-1b0c9b2c0003",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        260,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "model": "deepseek-v4.1-flash",
+        "options": {
+          "maxTokens": 800,
+          "temperature": 0.4
+        }
+      },
+      "id": "7a2e2b63-1e1f-4d54-8a2f-1b0c9b2c0004",
+      "name": "Ezkielyna Chat Model",
+      "type": "n8n-nodes-ezkielyna.lmChatEzkielyna",
+      "typeVersion": 1,
+      "position": [
+        140,
+        240
+      ],
+      "credentials": {
+        "ezkielynaApi": {
+          "name": "Ezkielyna account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 6
+      },
+      "id": "7a2e2b63-1e1f-4d54-8a2f-1b0c9b2c0005",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        300,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Cari informasi terbaru di web. Masukkan kata kunci pencarian singkat.",
+        "resource": "webSearch",
+        "operation": "search",
+        "query": "={{ $fromAI('query', 'kata kunci pencarian', 'string') }}",
+        "maxResults": 5,
+        "splitResults": false,
+        "options": {
+          "language": "id"
+        }
+      },
+      "id": "7a2e2b63-1e1f-4d54-8a2f-1b0c9b2c0006",
+      "name": "Cari di web",
+      "type": "n8n-nodes-ezkielyna.ezkielynaTool",
+      "typeVersion": 1,
+      "position": [
+        460,
+        240
+      ],
+      "credentials": {
+        "ezkielynaApi": {
+          "name": "Ezkielyna account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ezkielyna Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cari di web": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}
